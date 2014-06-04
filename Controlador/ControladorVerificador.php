@@ -1,11 +1,11 @@
 <?php
 
 require '../Modelo/ModeloVerificador.php';
-
-switch ($_GET['x']) {
+$valor = $_GET['x'];
+switch ($valor) {
     case 1:
         $login = $_GET['nombre_usuario'];
-        $str = strtolower($login);//TODO MINUSCULA
+        $str = strtolower($login); //TODO MINUSCULA
         echo verificarLogin($str);
         break;
 
@@ -32,19 +32,19 @@ switch ($_GET['x']) {
         $str = strtolower($telefono);
         echo verificarTelefonoEmpresa($str);
         break;
-    
+
     case 6:
         $login = $_GET['usuario_consultor'];
         $str = strtolower($login);
         echo verificarLogin($str);
         break;
-    
+
     case 7:
         $correo = $_GET['correo_consultor'];
         $str = strtolower($correo);
         echo verificarCorreoConsultor($str);
         break;
-    
+
     case 8:
         $telefono = $_GET['telefono_consultor'];
         $str = strtolower($telefono);

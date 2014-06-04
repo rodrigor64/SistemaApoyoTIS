@@ -1,6 +1,6 @@
 <?php
 
-require '../Controlador/Conexion.php';
+require_once '../Controlador/Conexion.php';
 
 function mostrarListaEmpresas($a, $u) {
     $con = new Conexion();
@@ -68,6 +68,7 @@ function esta_registrado($cod_GE) {
     } else {
         return FALSE;
     }
+    pg_close($c);
 }
 
 function conseguir_proyectos() {
@@ -124,5 +125,39 @@ function inscribir_GE($cod_GE, $usr_GE, $cod_cons, $cod_proy) {
             grupo_empresa_codgrupo_empresa, proyecto_codproyecto)
     VALUES ($usr_consul, $cod_cons, $usr_GE, 
             $cod_GE, '$cod_proy');");
+    echo "inscrito";
     pg_close($c);
+}
+
+function obtenerActividadesGE($usr_grupo_empresa) {
+    $conexion = new Conexion();
+    $conexion->getConection();
+    $sql = "select codcons_actividad, visiblepara,requiererespuesta,fechainicio,fechafin,horainicio,horafin,titulo,descripcion from cons_actividad where visiblepara='$usr_grupo_empresa' and now()<=fechafin and now()>=fechainicio ORDER BY fechainicio desc";
+    $rows = $conexion->ejecutarSql($sql);
+    for ($i = 0; $i < count($rows); $i++) {
+        $row = $rows[$i];
+        $codigo_actividad = $row['codcons_actividad'];
+        $visible = $row['visiblepara'];
+        $requiere = $row['requiererespuesta'];
+        $fechaini = $row['fechainicio'];
+        $fechafin = $row['fechafin'];
+        $horaini = $row['horainicio'];
+        $horafin = $row['horafin'];
+        $titulo = $row['titulo'];
+        $descripcion = $row['descripcion'];
+        
+        echo "<lbl3>$titulo</lbl3><br />";
+        echo "<lbl2>Fecha de inicio: $fechaini</lbl2><br />";
+        echo "<lbl2>Fecha de fin: $fechafin</lbl2><br />";
+        if ($requiere == "si_requiere") {
+            
+        echo "<a href '' onclick='openWin($codigo_actividad, $usr_grupo_empresa);'>Ver Mas |</a><a href=''> Responder</a><br />";
+        }  else {
+            
+        echo "<a href='' onclick='openWin($codigo_actividad, $usr_grupo_empresa);'>Ver Mas </a><br />";
+        }
+        echo "<lbl2>________________________________________________________________________________________________________________</lbl2><br />";
+    }
+    
+
 }

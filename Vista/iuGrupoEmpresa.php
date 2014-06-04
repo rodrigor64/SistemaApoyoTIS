@@ -59,9 +59,17 @@ if (!$_SESSION['id_usuario']) {
                 }
                 ?>
                 <div id="noticias_grupoEmpresa">
+                    <?php
+                        mostrar_actividades($u);
+                ?>
                 </div>   
             </article>
             <footer id="pie_grupo_empresa"><p>  Sistema Apoyo T.I.S. <br> Derechos Reservados Camaleon Software </p></footer>
         </div>
     </body>
 </html>
+<script>
+        function openWin(cod_actividad, usr_ge) {
+            window.open("../Vista/popUpNoticiasGE.php?cod="+cod_actividad+"&u="+usr_ge+"", "Mas de la Act.", "width=600, height=500");
+        }
+</script>
