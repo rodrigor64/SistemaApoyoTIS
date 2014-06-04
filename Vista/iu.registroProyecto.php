@@ -80,7 +80,7 @@ $(document).ready(function(){
                     </tr>
                     <tr>
                         <td align="right">Codigo del Proyecto:</td>
-                        <td width="10$"><input type="text" name="codigo_proyecto" id="codigo_proyecto" required <?php if(isset($_REQUEST['mensaje2'])){$cp=$_GET['cp']; echo"value='$cp'"; }?> /></td>
+                        <td width="10$"><input type="text" name="codigo_proyecto" id="codigo_proyecto" title="CPTIS-1402-2014 (NOMBRE-NUMERO-AÑO)" pattern="[A-Z0-9-]+" required <?php if(isset($_REQUEST['mensaje2'])){$cp=$_GET['cp']; echo"value='$cp'"; }?> /></td>
                         <td align="rigth" width="50%"><?php if(isset($_REQUEST['mensaje2'])){
                             $mensaje=$_GET['cp']; 
                             echo" EL CODIGO <strong>".$mensaje."</strong> YA EXISTE";}?>

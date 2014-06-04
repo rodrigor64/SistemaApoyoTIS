@@ -6,9 +6,14 @@ if(isset($_REQUEST['1'])){
     $monto_total = $_POST['monto_total'];
     $porcentaje_satisfaccion = $_POST['porcentaje_satisfaccion'];
     $porcentaje=100;
-    insertarPropuestaDePago($monto_total, $porcentaje_satisfaccion, $cod_grupoE, $cod_usuarioGE);
-    $codPlan_pago= retornarCodPlanDePago($monto_total,$porcentaje_satisfaccion);
-    header("Location: ../Vista/iu.registroDePlanDePagos.php?AVI&a=$cod_grupoE&u=$cod_usuarioGE&m_t=$monto_total&p_s=$porcentaje&c_p=$codPlan_pago");
+    if ($porcentaje_satisfaccion <= 100) {
+        insertarPropuestaDePago($monto_total, $porcentaje_satisfaccion, $cod_grupoE, $cod_usuarioGE);
+        $codPlan_pago= retornarCodPlanDePago($monto_total,$porcentaje_satisfaccion);
+        header("Location: ../Vista/iu.registroDePlanDePagos.php?AVI&a=$cod_grupoE&u=$cod_usuarioGE&m_t=$monto_total&p_s=$porcentaje&c_p=$codPlan_pago");
+    }else if ($porcentaje_satisfaccion >100) {
+        header("Location: ../Vista/iu.propuestaDePago.php?SMS&a=$cod_grupoE&u=$cod_usuarioGE&MT=$monto_total&PS=$porcentaje_satisfaccion");
+    }
+    
 }
 if(isset($_REQUEST['2'])){
     require '../Modelo/ModeloPropuestaPlanDePago.php';

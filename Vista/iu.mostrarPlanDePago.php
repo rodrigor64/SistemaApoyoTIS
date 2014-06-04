@@ -36,6 +36,7 @@
                             <td>Porcentaje</td>
                             <td>Monto</td>
                             <td>Fecha De Pago</td>
+                           <!-- <td>Entregables</td> -->
                         </tr>
                          <?php
                          require '../Controlador/ControladorMostrarPlanDePagos.php';
@@ -43,15 +44,18 @@
                          if($estado=="basio"){
                             echo ' "NO EXISTE UN REGISTRO RECIENTE" ';
                          }else if($estado=="lleno"){
-                            $lista = mostrarPlan($a,$u);
-                            foreach($lista as $post):?>
-                        <tr>
-                            <td><?php echo $post['hitoevento']?></td>
-                            <td><?php echo $post['porcentajepago']?></td>
-                            <td><?php echo $post['monto']?></td>
-                            <td><?php echo $post['fechapago']?></td>    
-                        </tr>
-                            <?php endforeach;
+                            $array_planDePagos = mostrarPlan($a,$u);
+                            $contador = 0;
+                                while ($contador <= sizeof($array_planDePagos)-1){?>
+                                        <tr>
+                                            <td><?php echo $array_planDePagos[$contador]?></td>
+                                            <td><?php echo $array_planDePagos[$contador+1]?></td>
+                                            <td><?php echo $array_planDePagos[$contador+2]?></td>
+                                            <td><?php echo $array_planDePagos[$contador+3]?></td>
+                                        </tr>        
+                                <?php  
+                                $contador=$contador+4;
+                                }
                          }?>
                     </thead>
                 </table>

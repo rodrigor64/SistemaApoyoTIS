@@ -47,13 +47,12 @@ require('../Controlador/Conexion.php');
         $con=$conec->getConection();        
         $mt=$monto_total;
         $pt=$porcentaje_satisfaccion;
-        
-        //falta crear una consulta que me retorne el codigo del untimo plan de pago si esta se repite 
-        
-        $sql="SELECT codplan_pago FROM plan_pago p WHERE p.montototal='$mt' and p.porcentajesatisfaccion='$pt'";
+        //$sql="SELECT codplan_pago FROM plan_pago p WHERE p.montototal='$mt' and p.porcentajesatisfaccion='$pt'";
+        $sql="SELECT max(codplan_pago) plan_pago FROM plan_pago p WHERE p.montototal='$mt' and p.porcentajesatisfaccion='$pt'";
+        //$sql="SELECT max(codplan_pago) FROM plan_pago p WHERE p.montototal='$mt' AND p.porcentajesatisfaccion='pt'";
         $consulta=pg_query($con,$sql);
-        $row = pg_fetch_object($consulta);
-        $cod = $row->codplan_pago;
+        $row = pg_fetch_array($consulta);
+        $cod = $row[0];
         echo $cod;
         return $cod;
     }

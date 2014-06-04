@@ -1,6 +1,6 @@
 <?php
 require '../Controlador/Conexion.php';
-    function retornarTemaConsultor($codF){
+    function retornarTemaGrupoEmpresa($codF){
         // Conectar con la base de datos y seleccionarla
         $conec=new Conexion(); 
         $con=$conec->getConection(); 
