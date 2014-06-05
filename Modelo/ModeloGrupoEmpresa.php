@@ -114,7 +114,7 @@ function conseguir_docentes() {
     if ($cant == 0) {
         echo '<option value="">No existen docentes disponibles</option>';
     } else {
-        $consulta_docentes = pg_query($c, "select idconsultor, nombreconsultor from consultor;");
+        $consulta_docentes = pg_query($c, "select nombreconsultor,idconsultor from consultor as c, usuario as u where c.usuario_idusuario= u.idusuario and habilitada ='t';");
         while ($f_docentes = pg_fetch_object($consulta_docentes)) {
             $nombre_consultor = $f_docentes->nombreconsultor;
             $id_consultor = $f_docentes->idconsultor;
@@ -144,7 +144,7 @@ function inscribir_GE($cod_GE, $usr_GE, $cod_cons, $cod_proy) {
 function obtenerActividadesGE($usr_grupo_empresa) {
     $conexion = new Conexion();
     $conexion->getConection();
-    $sql = "select codcons_actividad, visiblepara,requiererespuesta,fechainicio,fechafin,horainicio,horafin,titulo,descripcion from cons_actividad where visiblepara='$usr_grupo_empresa' and now()<=fechafin and now()>=fechainicio ORDER BY fechainicio desc";
+    $sql = "select codcons_actividad, visiblepara,requiererespuesta,fechainicio,fechafin,horainicio,horafin,titulo,descripcion from cons_actividad where visiblepara='$usr_grupo_empresa' or visiblepara='publica' and now()<=fechafin and now()>=fechainicio ORDER BY fechainicio desc";
     $rows = $conexion->ejecutarSql($sql);
     for ($i = 0; $i < count($rows); $i++) {
         $row = $rows[$i];

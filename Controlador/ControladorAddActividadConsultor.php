@@ -11,11 +11,10 @@ $hora_ini = $_POST["hora_ini"];
 $hora_fin = $_POST["hora_fin"];
 $titulo = $_POST["txt_titulo"];
 $descripcion = $_POST["ctxt_descripcion"];
-$activa = "FALSE";
 $contestada = "FALSE";
 
 
- AddActividad($id_usuarioConsultor,$idconsultor,$visible_para, $req_repuesta,$fecha_ini,$fecha_fin,$hora_ini,$hora_fin,$titulo, $descripcion,$activa,$contestada);
+ AddActividad($id_usuarioConsultor,$idconsultor,$visible_para, $req_repuesta,$fecha_ini,$fecha_fin,$hora_ini,$hora_fin,$titulo, $descripcion,$contestada);
 
  
 //$nombreArchivo=$_FILES['nombre_archivo_subir']['name'];
