@@ -25,7 +25,7 @@
         $conec=new Conexion(); 
         $con=$conec->getConection();  
         $arreglo_entregas = array();
-        $sql="SELECT hitooevento,porcentajesatisfaccion,porcentajealcazado,estadopago ";
+        $sql="SELECT hitooevento,porcentajesatisfaccion,porcentajealcazado,montopago,estadopago ";
         $sql.="FROM pago_consultor p ";
         $sql.="WHERE p.consultor_idconsultor='$codC' AND p.consultor_usuario_idusuario='$codUC' AND p.hito_pagable_plan_pago_calendario_grupo_empresa_usuario_idusuar='$codUGE' AND p.hito_pagable_plan_pago_calendario_grupo_empresa_codgrupo_empres='$codGE'";
         $result = pg_query($con,$sql);
@@ -33,10 +33,12 @@
             $h_e = $row->hitooevento;
             $p_s = $row->porcentajesatisfaccion;
             $p_a = $row->porcentajealcazado;
+            $m_p = $row->montopago;
             $s_p = $row->estadopago;
             $arreglo_entregas[] = $h_e;
             $arreglo_entregas[] = $p_s;
             $arreglo_entregas[] = $p_a;
+            $arreglo_entregas[] = $m_p;
             $arreglo_entregas[] = $s_p;
         }
         return $arreglo_entregas;

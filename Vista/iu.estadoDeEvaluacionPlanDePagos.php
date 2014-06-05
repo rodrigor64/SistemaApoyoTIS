@@ -32,10 +32,11 @@
                     <table align="center" border="0" class="encabezado" width="100%">
                         <thead align="center">
                         <tr>
-                            <td>Hito O Evento</td>
-                            <td>Porcentaje De Stisfaccion</td>
-                            <td>Porcentaje Alcanzado</td>
-                            <td>Estado De Pago</td>
+                            <td width="50%">Hito O Evento</td>
+                            <td width="10%">Porcentaje De Satisfaccion</td>
+                            <td width="10%">Porcentaje Alcanzado</td>
+                            <td width="10%">Monto De Pago</td>
+                            <td width="20%">Estado De Pago</td>
                         </tr>
             
                         <?php
@@ -52,9 +53,10 @@
                                             <td><?php echo $array_evaluacion[$contador+1]?></td>
                                             <td><?php echo $array_evaluacion[$contador+2]?></td>
                                             <td><?php echo $array_evaluacion[$contador+3]?></td>
+                                            <td><?php echo $array_evaluacion[$contador+4]?></td>
                                         </tr>        
                                 <?php  
-                                $contador=$contador+4;
+                                $contador=$contador+5;
                                 }
                             }?>
                         </thead>

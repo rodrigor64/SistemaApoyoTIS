@@ -19,6 +19,7 @@
         $nombreH=$_GET['n_h'];
         $monto=$_GET['monto'];
         $p_s=$_GET['p_s'];
+        $codPPago=$_GET['c_p'];
 
         $entregable=$_POST['entregable'];    
         $porcentaje=$_POST['porcentaje'];
@@ -28,9 +29,9 @@
             $sumaAlcance=$alcance;
             eliminarEntregableTablaRegistros($codH,$entregable,$codE);
             registrarEvaluacionPlanDePagosGE($porcentaje, $alcance, $codH, $entregable, $nombreH, $sumaAlcance);
-            header("Location: ../Vista/iu.evaluacionHitoPagableGE.php?tablaEvaluacionNueva&true&tabla&c_e=$codE&a=$codC&u=$codUC&c_a=$codGE&i_u=$codUGE&c_h=$codH&entregable=$entregable&n_h=$nombreH&monto=$monto&p_s=$p_s");
+            header("Location: ../Vista/iu.evaluacionHitoPagableGE.php?tablaEvaluacionNueva&true&tabla&c_e=$codE&a=$codC&u=$codUC&c_a=$codGE&i_u=$codUGE&c_h=$codH&entregable=$entregable&n_h=$nombreH&monto=$monto&p_s=$p_s&c_p=$codPPago");
         }else if($alcance>$porcentaje) {
-            header("Location: ../Vista/iu.evaluacionHitoPagableGE.php?tablaEvaluacion&mensajeEVA&true&c_e=$codE&a=$codC&u=$codUC&c_a=$codGE&i_u=$codUGE&c_h=$codH&entregable=$entregable&n_h=$nombreH&monto=$monto&p_s=$p_s");
+            header("Location: ../Vista/iu.evaluacionHitoPagableGE.php?tablaEvaluacion&mensajeEVA&true&c_e=$codE&a=$codC&u=$codUC&c_a=$codGE&i_u=$codUGE&c_h=$codH&entregable=$entregable&n_h=$nombreH&monto=$monto&p_s=$p_s&c_p=$codPPago");
         }
         
     }

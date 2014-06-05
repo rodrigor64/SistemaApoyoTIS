@@ -3,19 +3,17 @@ require '../Controlador/Conexion.php';
     function eliminarElPuntoDataDeEvaluacionHitosGE($codHE,$nombreHE){
         unlink("../Vista/Otros/EvaluacionHitosGE/".$codHE."_".$nombreHE.".data");
     }
-    function registraPagoDelConsultor($codC, $codUC, $codGE, $codUGE, $hitoE, $montoP, $porcentajeS, $porcentajeA){
+    function registraPagoDelConsultor($codC, $codUC, $codGE, $codUGE, $codPPago, $codHE, $hitoE, $montoP, $porcentajeS, $porcentajeA){
         $conec=new Conexion(); 
         $con=$conec->getConection();
         $codCalendario=retornarCodCalendario($codGE,$codUGE);
-        $codP=retornarCodPlanDePagos($codCalendario,$codGE,$codUGE,$porcentajeS);
-        $codH=retornarCodHitoOEvento($codP,$codCalendario,$codGE,$codUGE,$hitoE,$montoP);
         if ($porcentajeA<$porcentajeS) {
-            $sql2 = "INSERT INTO pago_consultor (consultor_idconsultor,consultor_usuario_idusuario,hito_pagable_plan_pago_codplan_pago,hito_pagable_codhito_pagable,hito_pagable_plan_pago_calendario_grupo_empresa_usuario_idusuar,hito_pagable_plan_pago_calendario_grupo_empresa_codgrupo_empres,hito_pagable_plan_pago_calendario_codcalendario,hitooevento,porcentajesatisfaccion,porcentajealcazado,estadopago)";
-            $sql2.= "VALUES ('$codC','$codUC','$codP','$codH','$codUGE','$codGE','$codCalendario','$hitoE','$porcentajeS','$porcentajeA','NO ACEPTADO')";
+            $sql2 = "INSERT INTO pago_consultor (consultor_idconsultor,consultor_usuario_idusuario,hito_pagable_plan_pago_codplan_pago,hito_pagable_codhito_pagable,hito_pagable_plan_pago_calendario_grupo_empresa_usuario_idusuar,hito_pagable_plan_pago_calendario_grupo_empresa_codgrupo_empres,hito_pagable_plan_pago_calendario_codcalendario,hitooevento,porcentajesatisfaccion,porcentajealcazado,montopago,estadopago)";
+            $sql2.= "VALUES ('$codC','$codUC','$codPPago','$codHE','$codUGE','$codGE','$codCalendario','$hitoE','$porcentajeS','$porcentajeA','$montoP','NO ACEPTADO')";
             pg_query($con,$sql2) or die ("ERROR :( " .pg_last_error());
         }else if($porcentajeA>=$porcentajeS){
-            $sql2 = "INSERT INTO pago_consultor (consultor_idconsultor,consultor_usuario_idusuario,hito_pagable_plan_pago_codplan_pago,hito_pagable_codhito_pagable,hito_pagable_plan_pago_calendario_grupo_empresa_usuario_idusuar,hito_pagable_plan_pago_calendario_grupo_empresa_codgrupo_empres,hito_pagable_plan_pago_calendario_codcalendario,hitooevento,porcentajesatisfaccion,porcentajealcazado,estadopago)";
-            $sql2.= "VALUES ('$codC','$codUC','$codP','$codH','$codUGE','$codGE','$codCalendario','$hitoE','$porcentajeS','$porcentajeA','ACEPTADO')";
+            $sql2 = "INSERT INTO pago_consultor (consultor_idconsultor,consultor_usuario_idusuario,hito_pagable_plan_pago_codplan_pago,hito_pagable_codhito_pagable,hito_pagable_plan_pago_calendario_grupo_empresa_usuario_idusuar,hito_pagable_plan_pago_calendario_grupo_empresa_codgrupo_empres,hito_pagable_plan_pago_calendario_codcalendario,hitooevento,porcentajesatisfaccion,porcentajealcazado,montopago,estadopago)";
+            $sql2.= "VALUES ('$codC','$codUC','$codPPago','$codHE','$codUGE','$codGE','$codCalendario','$hitoE','$porcentajeS','$porcentajeA','$montoP','ACEPTADO')";
             pg_query($con,$sql2) or die ("ERROR :( " .pg_last_error());
         }
     }
