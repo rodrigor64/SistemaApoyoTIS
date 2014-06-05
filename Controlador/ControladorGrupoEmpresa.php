@@ -13,4 +13,8 @@
         $listaEmpresas = mostrarEmpresas();
         require_once '../Vista/ListaEmpresas.html';
     }
+    
+    function conseguir_usuario($cod_ge) {
+        return devolver_usuario($cod_ge);
+}
 ?>

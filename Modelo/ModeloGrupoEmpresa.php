@@ -57,6 +57,18 @@ function mostrarEmpresas() {
     pg_close($c);
 }
 
+
+function devolver_usuario($cod_grupo_empresa) {
+    $con = new Conexion();
+    $c = $con->getConection();
+    $consulta = pg_query($c, "select usuario_idusuario from grupo_empresa where codgrupo_empresa = $cod_grupo_empresa;");
+    while ($f = pg_fetch_object($consulta)) {
+        $a = $f->usuario_idusuario;
+    }
+    return $a;
+    pg_close($c);
+}
+
 function esta_registrado($cod_GE) {
     $con = new Conexion();
     $c = $con->getConection();
@@ -80,7 +92,7 @@ function conseguir_proyectos() {
     $cant = $f->count;
 
     if ($cant == 0) {
-        echo "<option value=0>No existen proyectos</option>";
+        echo '<option value="">No existen proyectos</option>';
     } else {
         $consulta_proyectos = pg_query($c, "select nombreproyecto, codproyecto from proyecto;");
         while ($f_proyectos = pg_fetch_object($consulta_proyectos)) {
@@ -100,7 +112,7 @@ function conseguir_docentes() {
     $cant = $f->count;
 
     if ($cant == 0) {
-        echo "<option value=0>No existen docentes disponibles</option>";
+        echo '<option value="">No existen docentes disponibles</option>';
     } else {
         $consulta_docentes = pg_query($c, "select idconsultor, nombreconsultor from consultor;");
         while ($f_docentes = pg_fetch_object($consulta_docentes)) {
@@ -158,6 +170,4 @@ function obtenerActividadesGE($usr_grupo_empresa) {
         }
         echo "<lbl2>________________________________________________________________________________________________________________</lbl2><br />";
     }
-    
-
 }

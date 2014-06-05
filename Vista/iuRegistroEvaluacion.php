@@ -27,7 +27,7 @@
                 ?>    
                 </nav>
                 <div id="noticias_seguimiento">
-                    <h2> REGISTRO DE EVALUACION </h2>
+                    <h2> REGISTRO DE EVALUACION FINAL </h2>
                     <?php $proy = $_GET['proyecto']; 
                     echo "<form name='formulario' method='POST' action='../Controlador/ControladorEvaluacionFinal.php?a=$a&u=$u'>";
                         ?>
