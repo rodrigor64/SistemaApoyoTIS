@@ -16,9 +16,9 @@
                 require '../Controlador/ControladorActividad.php';
                 obtenerActividades();
                 ?>
-                
+
             </article>
-            
+
             <footer id="pie_noticias">
                 <p>  Sistema Apoyo T.I.S. <br> Derechos Reservados Camaleon Software </p>
             </footer>
@@ -26,7 +26,7 @@
     </body>
 </html>
 <script>
-        function openWin(cod_actividad) {
-            window.open("../Vista/popUpNoticias.php?cod="+cod_actividad+"", "Mas de la Act.", "width=600, height=500");
-        }
+    function openWin(cod_actividad) {
+        window.open("../Vista/popUpNoticias.php?cod=" + cod_actividad + "", "Mas de la Act.", "width=600, height=500");
+    }
 </script>

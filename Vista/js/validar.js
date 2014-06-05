@@ -14,7 +14,7 @@ $("form").validate({
             required: true, literal:true, minlength: 5, maxlength: 45, remote: "../Controlador/ControladorVerificador.php?x=2"
         },
         nombre_corto_ge: {
-            required: true, literal:true, minlength: 5, maxlength: 15, remote: "../Controlador/ControladorVerificador.php?x=3"
+            required: true, literal:true, minlength: 4, maxlength: 15, remote: "../Controlador/ControladorVerificador.php?x=3"
         },
         correo_ge: {
             required: true, email: true, maxlength: 70, remote: "../Controlador/ControladorVerificador.php?x=4"
@@ -69,14 +69,14 @@ $("form").validate({
             required: "Introduzca el Nombre de su Empresa.",
             minlength: "Mínimo {0} Caracteres.",
             maxlength: "Máximo {0} Caracteres.",
-            literal:"Ingrese máximo tres palabras.",
+            literal:"Ingrese solo palabras y máximo tres palabras.",
             remote: "nombre no disponible, intente uno distinto."
         },
         nombre_corto_ge: {
             required: "Introduzca el Nombre Corto de su Empresa.",
             minlength: "Mínimo {0} Caracteres.",
             maxlength: "Máximo {0} Caracteres.",
-            literal:"Ingrese máximo tres palabras.",
+            literal:"Ingrese solo palabras y máximo tres palabras.",
             remote: "nombre no disponible, intente uno distinto."
         },
         correo_ge: {
@@ -118,7 +118,7 @@ $("form").validate({
         nombreCompleto_consultor: {
             required: "Introduzca el Nombre Completo.",
             minlength: "Mínimo {0} Caracteres.",
-            literal:"Ingrese máximo tres palabras.",
+            literal:"Ingrese solo palabras y máximo tres palabras.",
             maxlength: "Máximo {0} Caracteres."
         },
         correo_consultor: {

@@ -38,11 +38,6 @@ function RegistrarGrupoEmpresa($usuario, $nombre_largo, $nombre_corto, $correo, 
     $sql.= "VALUES ($idusuario,'$nombre_largo_ge','$nombre_corto_ge','$corrreo_ge','$direccion_ge','$telefono_ge')";
     pg_query($con, $sql) or die("ERROR :( " . pg_last_error());
 
-    $cadena = "<h2>Sin Actividades</h2>";
-    $mis_actividades = fopen("../Vista/Otros/Actividades/GrupoEmpresas/$idusuario.data", "w");
-    fwrite($mis_actividades, $cadena);
-    fclose($mis_actividades);
-
     crear_calendario($idusuario);
     header("Location: ../Vista/iuIngresar.php");
 }

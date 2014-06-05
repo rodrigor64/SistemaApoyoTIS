@@ -1,7 +1,6 @@
 <?php
 session_start();
 if (!$_SESSION['id_usuario']) {
-    //MOSTRAR MENSAJE ("USUARIO NO AUTENTICADO")
      header("Location: ../Vista/iuIngresar.php");
 } else {
     if ($_SESSION['rol'] != 1) {

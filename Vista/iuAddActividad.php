@@ -87,7 +87,7 @@
 
                             <tr>
                                 <td align="right">Título:</td>
-                                <td ><input title="Se necesita un título para la actividad" type="text" name="txt_titulo" id="titulo" placeholder="Actividad descriptiva" pattern="[a-zA-Z]+" required /></td>
+                                <td ><input title="Se necesita un título para la actividad" type="text" name="txt_titulo" id="titulo" placeholder="Actividad descriptiva"  required /></td>
                             </tr>
 
                             <tr>

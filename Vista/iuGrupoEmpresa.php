@@ -61,6 +61,7 @@ if (!$_SESSION['id_usuario']) {
                 <div id="noticias_grupoEmpresa">
                     <?php
                         mostrar_actividades($u);
+                        
                 ?>
                 </div>   
             </article>
