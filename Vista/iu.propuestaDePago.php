@@ -37,11 +37,11 @@
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
                 <tr>
                     <td width="30%" align="right"><Strong>Monto Total :</strong></td>
-                    <td><input type="text" name="monto_total" id="monto_total" title="Rellene este compo solo numeros" required pattern="[0-9.]+" <?php if(isset($_REQUEST['SMS'])){$mt=$_GET['MT']; echo"value='$mt'"; }?> /><strong> (Bolivianos)</strong></td>
+                    <td><input type="text" name="monto_total" id="monto_total" title=" 100000, 950 ,1237374.535 valores numericos" required pattern="[0-9.]+" <?php if(isset($_REQUEST['SMS'])){$mt=$_GET['MT']; echo"value='$mt'"; }?> /><strong> (Bolivianos)</strong></td>
                 </tr>
                 <tr>
                     <td width="30%" align="right"><strong>Porcentaje de Satisfaccion :</strong></td>
-                    <td><input  type="text" name="porcentaje_satisfaccion" id="porcentaje_satisfaccion" title="Rellene este compo solo numeros" required pattern="[0-9.]+" <?php if(isset($_REQUEST['SMS'])){$ps=$_GET['PS']; echo"value='$ps'"; }?> /><strong> (%)</strong></td>
+                    <td><input  type="text" name="porcentaje_satisfaccion" id="porcentaje_satisfaccion" title="100, 55, 45, 12 valores numeros" required pattern="[0-9.]+" <?php if(isset($_REQUEST['SMS'])){$ps=$_GET['PS']; echo"value='$ps'"; }?> /><strong> (%)</strong></td>
                 </tr>
                 <?php
                 if(isset($_REQUEST['SMS'])){

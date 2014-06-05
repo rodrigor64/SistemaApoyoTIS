@@ -43,14 +43,18 @@
                             if ($estado == "basio") {
                                 echo ' <strong>"NO EXISTE UN REGISTRO RECIENTE"</strong> ';
                             }  else if ($estado == "lleno") {
-                                $lista = mostrarPlanDePagosGE($codGE,$codUGE,$codC,$codUC);
-                                foreach($lista as $post):?>
-                            <tr>
-                                <td><?php echo $post['hitoevento']?></td>
-                                <td><?php echo $post['porcentajepago']?></td>
-                                <td><?php echo $post['monto']?></td>
-                                <td><?php echo $post['fechapago']?></td>    
-                            </tr><?php endforeach;
+                                $array_planDePagosGE = mostrarPlanDePagosGE($codGE,$codUGE,$codC,$codUC);
+                                $contador = 0;
+                                while ($contador <= sizeof($array_planDePagosGE)-1){?>
+                                        <tr>
+                                            <td><?php echo $array_planDePagosGE[$contador]?></td>
+                                            <td><?php echo $array_planDePagosGE[$contador+1]?></td>
+                                            <td><?php echo $array_planDePagosGE[$contador+2]?></td>
+                                            <td><?php echo $array_planDePagosGE[$contador+3]?></td>
+                                        </tr>        
+                                <?php  
+                                $contador=$contador+4;
+                                }
                             }?>
                          </thead>
                     </table>

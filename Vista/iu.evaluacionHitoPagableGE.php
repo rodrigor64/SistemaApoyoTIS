@@ -29,7 +29,8 @@
             <?php
             $codHE=$_GET['c_h'];
             $nombreHE=$_GET['n_h'];
-      echo" <form name='formulario' action='../Controlador/ContoladorRegistroEvaluacionHitoPagable.php?a=$codC&u=$codUC&c_a=$codGE&i_u=$codUGE&c_h=$codHE&n_h=$nombreHE' method='post'>"
+            $codPlanP = $_GET['c_p'];
+      echo" <form name='formulario' action='../Controlador/ContoladorRegistroEvaluacionHitoPagable.php?a=$codC&u=$codUC&c_a=$codGE&i_u=$codUGE&c_h=$codHE&n_h=$nombreHE&c_p=$codPlanP' method='post'>"
             ?>
                 <table width="96%" border="2" cellspacing="2" cellpadding="2">
                     <tr>
@@ -100,7 +101,7 @@
                 }?>
             <br>
             <?php
-           
+            $codPPago = $_GET['c_p'];
             $monto=$_GET['monto'];
             $p_s=$_GET['p_s'];
            // echo"
@@ -131,7 +132,7 @@
                         $nuevaLista= mostrarRegistrosEtregables($codHito);
                         $con=0;
                         foreach($nuevaLista as $post):
-                        echo"<form name='formulario' action='../Controlador/ControladorEvaluacionHitoPagableGE.php?registarEPPGE&true&a=$codC&u=$codUC&c_a=$codGE&i_u=$codUGE&c_h=$codHito&n_h=$nombreH&monto=$monto&p_s=$p_s' method='post'>
+                        echo"<form name='formulario' action='../Controlador/ControladorEvaluacionHitoPagableGE.php?registarEPPGE&true&a=$codC&u=$codUC&c_a=$codGE&i_u=$codUGE&c_h=$codHito&n_h=$nombreH&monto=$monto&p_s=$p_s&c_p=$codPPago' method='post'>
                             <tr>"
                                 ."<td ><input size='70%' name='entregable' value='$post' readonly='readonly'></td>"
                                 ."<td ><input size='8%' name='porcentaje' required pattern='[0-9.]+'></td>"
@@ -149,7 +150,7 @@
                             $listaNueva= retornarRegistro($codHito);
                             $con=0;
                             foreach($listaNueva as $post):
-                            echo"<form name='formulario' action='../Controlador/ControladorEvaluacionHitoPagableGE.php?registarEPPGE&true&contador=$con&a=$codC&u=$codUC&c_a=$codGE&i_u=$codUGE&c_h=$codHito&n_h=$nombreH&monto=$monto&p_s=$p_s' method='post'>
+                            echo"<form name='formulario' action='../Controlador/ControladorEvaluacionHitoPagableGE.php?registarEPPGE&true&contador=$con&a=$codC&u=$codUC&c_a=$codGE&i_u=$codUGE&c_h=$codHito&n_h=$nombreH&monto=$monto&p_s=$p_s&c_p=$codPPago' method='post'>
                                 <tr>"
                                     ."<td ><input size='70%' name='entregable' value='$post' readonly='readonly'></td>"
                                     ."<td ><input size='8%' name='porcentaje' required pattern='[0-9.]+'></td>"
