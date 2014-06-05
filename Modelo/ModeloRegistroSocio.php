@@ -21,8 +21,8 @@ function RegistrarUsuario($usuario, $contrasena) {
     $nombre_usuario = strtolower($usuario);
     $contrasena_usuario = $contrasena;
 
-    $sql = "INSERT INTO Usuario (login,passwd)
-                        VALUES ('$nombre_usuario','$contrasena_usuario')";
+    $sql = "INSERT INTO Usuario (login,passwd,habilitada)
+                        VALUES ('$nombre_usuario','$contrasena_usuario',true)";
     pg_query($con, $sql) or die("ERROR :( " . pg_last_error());
 }
 
@@ -45,7 +45,7 @@ function RegistrarSocio($login,$codGrupoempresa,$tipoSocio,$usuario_grupoEmpresa
     pg_query($con, $sql) or die("ERROR :( " . pg_last_error());
     //mensaje de registro exitoso
     // mensaje de error en caso de usuario duplicado o en caso de nombre de grupo empresa duplicado
-    header("Location: ../Vista/iu.ingresar.html");     
+    header("Location: ../Vista/iuingresar.php");     
 }
 ?>
 

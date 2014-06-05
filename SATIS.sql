@@ -132,8 +132,7 @@ CREATE TABLE Socio (
   apellidosSocio VARCHAR(25) NULL,
   estadoCivil VARCHAR(15) NULL,
   direccion VARCHAR(45) NULL,
-  edad INTEGER NULL,
-  profecion VARCHAR(45) NULL,
+  profesion VARCHAR(45) NULL,
   PRIMARY KEY(idSocio, Grupo_Empresa_CodGrupo_Empresa, Tipo_Socio_codTipo_Socio, Grupo_Empresa_Usuario_idUsuario),
   FOREIGN KEY(Grupo_Empresa_CodGrupo_Empresa, Grupo_Empresa_Usuario_idUsuario)
     REFERENCES Grupo_Empresa(CodGrupo_Empresa, Usuario_idUsuario)
@@ -318,6 +317,8 @@ CREATE TABLE GE_Documento (
   Grupo_Empresa_Usuario_idUsuario INTEGER NOT NULL,
   nombreDocumento VARCHAR(45) NULL,
   pathDocumentoGE VARCHAR(120) NULL,
+  titulo_gedocumento VARCHAR(45),
+  descripciongedocumento text,
   PRIMARY KEY(idGE_Documento, Grupo_Empresa_CodGrupo_Empresa, Grupo_Empresa_Usuario_idUsuario),
   FOREIGN KEY(Grupo_Empresa_CodGrupo_Empresa, Grupo_Empresa_Usuario_idUsuario)
     REFERENCES Grupo_Empresa(CodGrupo_Empresa, Usuario_idUsuario)
@@ -329,6 +330,7 @@ CREATE TABLE Cons_Documento (
   idCons_Documento SERIAL NOT NULL,
   Consultor_idConsultor INTEGER NOT NULL,
   nombreDocumento VARCHAR(45) NULL,
+  titulo_consdocumento VARCHAR(45),
   descripcionConsultorDocumento TEXT NULL,
   pathDocumentoConsultor VARCHAR(120) NULL,
   PRIMARY KEY(idCons_Documento),
@@ -470,7 +472,7 @@ INSERT INTO user_rol(
     VALUES ('1', '1');
 INSERT INTO tipo_socio(nombretipo)
                VALUES ('representante legal');
-INSERT INTO tipo_socio(codtipo_socio, nombretipo)
+INSERT INTO tipo_socio(nombretipo)
                VALUES ('socio regular');
 
 INSERT INTO tipo_criterio(

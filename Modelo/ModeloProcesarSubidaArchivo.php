@@ -3,6 +3,7 @@ require '../Controlador/Conexion.php';
 
 function subirPropuesta($idUsuario,$tipo_Archivo,$codGrupoempresa,$nombreArchivo,$nombreTemporalArchivo,$descripcion)
 {
+    $res;
     if($tipo_Archivo=='application/pdf'){
     $carpetaRaiz="../Archivos/";
     $gestion=date("Y");
@@ -41,7 +42,7 @@ function subirPropuesta($idUsuario,$tipo_Archivo,$codGrupoempresa,$nombreArchivo
               $nombreFinal=guardarArchivo($carpetaDestino,$nombreArchivo,$nombreTemporalArchivo);
               $rutaFinal=$carpetaDestino.$nombreFinal;
               guardarRutaGrupoEmpresa($codGrupoempresa,$idUsuario,$nombreFinal,$rutaFinal,$descripcion);
-              header('Location:../Vista/iusubirArchivoGE.php?a=$a&u=$u&m=2');
+              $res=2;
               
         }
         else{
@@ -52,26 +53,30 @@ function subirPropuesta($idUsuario,$tipo_Archivo,$codGrupoempresa,$nombreArchivo
               $nombreFinal=guardarArchivo($carpetaDestino,$nombre_Archivo,$nombre_Temporal_Archivo);
               $rutaFinal=$carpetaDestino.$nombreFinal;
               guardarRutaGrupoEmpresa($codGrupoempresa,$idUsuario,$nombreFinal,$rutaFinal,$descripcion);
-              header('Location:../Vista/iusubirArchivoGE.php?a=$a&u=$u&m=2');
+              $res=2;
             }
         }
     
     }
+    else{
+        $res=1;
+    }
 }
 
-function subirArchivoPublico($tipo_Archivo,$nombre_Archivo,$nombre_Temporal_Archivo,$descripcion)
+function subirArchivoPublico($idUsuario,$codGrupoempresa,$titulo,$tipo_Archivo,$nombre_Archivo,$nombre_Temporal_Archivo,$descripcion)
 {
+   $res=0;
    if($tipo_Archivo=='application/pdf'){
     $carpetaRaiz="../Archivos/";
     $gestion=date("Y");
     $carpetaDestino=$carpetaRaiz."Documentos publicos/".$gestion."/";    
-    }
+    
     if(file_exists($carpetaDestino)){
               $nombreFinal=guardarArchivo($carpetaDestino,$nombre_Archivo,$nombre_Temporal_Archivo);
               $rutaFinal=$carpetaDestino.$nombreFinal;
-              guardarParaTodos($nombreFinal, $descripcion, $rutaFinal);
-              header('Location:../Vista/iusubirArchivoConsultor.php?a=$a&u=$u&m=2');
-              
+              guardarParaTodos($titulo,$nombreFinal, $descripcion, $rutaFinal);
+              $res=2;
+                          
         }
         else{
             if(!mkdir($carpetaDestino, 0777, true)) {
@@ -80,10 +85,16 @@ function subirArchivoPublico($tipo_Archivo,$nombre_Archivo,$nombre_Temporal_Arch
             else{
               $nombreFinal=guardarArchivo($carpetaDestino,$nombre_Archivo,$nombre_Temporal_Archivo);
               $rutaFinal=$carpetaDestino.$nombreFinal;
-              guardarParaTodos($nombreFinal, $descripcion, $rutaFinal);
-              header('Location:../Vista/iusubirArchivoConsultor.php?a=$a&u=$u&m=2');
+              guardarParaTodos($titulo,$nombreFinal, $descripcion, $rutaFinal);
+             $res=2;
             }
         }
+   }
+   else{
+       $res=1;
+   }
+
+return $res;        
 }
 
 function subirArchivo($visible_para,$nombre_gestion,$nombre_proyecto,$nombre_consultor,$nombre_Archivo,$nombre_Temporal_Archivo,$tipo_Archivo)
@@ -165,26 +176,26 @@ function renombrar($rutaArchivo,$nom,$tmp_Archivo_r){
     return $nombreParcial;
 }
 
-function guardarRutaConsultor($idConsultor,$nombre,$descripcion,$ruta) {
+function guardarRutaConsultor($idConsultor,$nombre,$descripcion,$ruta,$titulo) {
     $conec = new Conexion();
     $con = $conec->getConection();
 
     $sql="INSERT INTO cons_documento(consultor_idconsultor, nombredocumento, descripcionconsultordocumento, 
-                                     pathdocumentoconsultor)
-                             VALUES ('$idConsultor','$nombre','$descripcion','$ruta')";
+                                     pathdocumentoconsultor,titulo_consdocumento)
+                             VALUES ('$idConsultor','$nombre','$descripcion','$ruta','$titulo')";
     pg_query($con,$sql) or die("ERROR :(".pg_last_error());
 }
-function guardarRutaGrupoEmpresa($codGE,$idGEUsuario,$nombre,$ruta,$descripcion) {
+function guardarRutaGrupoEmpresa($codGE,$idGEUsuario,$nombre,$ruta,$descripcion,$titulo) {
     $conec = new Conexion();
     $con = $conec->getConection();
     
     $sql="INSERT INTO ge_documento(grupo_empresa_codgrupo_empresa, grupo_empresa_usuario_idusuario, 
-                                   nombredocumento, pathdocumentoge,descripcion)
-                                  VALUES ('$codGE','$idGEUsuario','$nombre','$ruta','$descripcion')";
+                                   nombredocumento, pathdocumentoge,descripciongedocumento,titulo_gedocumento)
+                                  VALUES ('$codGE','$idGEUsuario','$nombre','$ruta','$descripcion','$titulo')";
     pg_query($con,$sql) or die("ERROR :(".pg_last_error());
 }
 
-function guardarParaTodos($nombre,$descripcion,$ruta) {
+function guardarParaTodos($titulo,$nombre,$descripcion,$ruta) {
     
     
     $conec = new Conexion();
@@ -197,7 +208,7 @@ function guardarParaTodos($nombre,$descripcion,$ruta) {
         while ($row = pg_fetch_row($result1)) {
                 $codgrupo_empresa= $row[0];
                 $usuario_idusuario= $row[1];
-                guardarRutaGrupoEmpresa($codgrupo_empresa,$usuario_idusuario, $nombre,$ruta,$descripcion);
+                guardarRutaGrupoEmpresa($codgrupo_empresa,$usuario_idusuario, $nombre,$ruta,$descripcion,$titulo);
         }  
     $result2 = pg_query($con, "SELECT idconsultor FROM consultor");
     if (!$result2) {
@@ -205,7 +216,18 @@ function guardarParaTodos($nombre,$descripcion,$ruta) {
         }
         while ($row = pg_fetch_row($result2)) {
                 $idConsultor= $row[0];
-                guardarRutaConsultor($idConsultor,$nombre,$descripcion,$ruta);
+                guardarRutaConsultor($idConsultor,$nombre,$descripcion,$ruta,$titulo);
         }
+    //llenarPublicos($nombre, $descripcion, $ruta, $titulo);    
     
+}
+function llenarPublicos($nombre,$descripcion,$ruta,$titulo)
+{
+    $conec = new Conexion();
+    $con = $conec->getConection();
+    
+    $sql="INSERT INTO documentos_publicos( titulo_docuemnto, descripcion_documento, nombre_documento, 
+            ruta_documento)
+            VALUES ('$titulo','$descripcion','$nombre','$ruta');";
+    pg_query($con,$sql) or die("ERROR :(".pg_last_error());
 }

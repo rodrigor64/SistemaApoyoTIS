@@ -43,7 +43,24 @@ $("form").validate({
         },
         telefono_consultor: {
             required: true, number: true, remote: "../Controlador/ControladorVerificador.php?x=8"
-        }
+        },
+        // CONTROL REGISTRO SOCIOS 
+        nombre_socio: {
+            required: true, literal: true
+        },
+        apellidos_socio: {
+            required: true, literal: true
+        },
+         correo_socio: {
+            required: true,email: true 
+         },
+         direccion_socio: {
+             required: true
+         },
+         profesion_socio:{
+             required: true
+         }
+         
     },
     messages: {
         //MENSAJES REGISTRO GRUPO EMPRESAS
@@ -132,7 +149,26 @@ $("form").validate({
             required: "Introduzca su teléfono.",
             number: "Introduzca un número válido.",
             remote: "Teléfono ya registrado."
-        }
+        },
+        //MENSAJES REGISTRO SOCIOS  
+        nombre_socio: {
+            required: "Ingrese el nombre del Socio.",
+            literal : "Ingrese solo palabras y máximo tres palabras."
+        },
+         apellidos_socio:{
+            required: "Ingrese el nombre del Socio.",
+            literal : "Ingrese solo palabras y máximo tres palabras."
+         },
+         correo_socio: {
+            required: "Ingrese un correo electrónico.", 
+            email: "Introduzca un correo electrónico válido" 
+         },
+         direccion_socio: {
+             required: "Ingrese una direccion."
+         },
+         profesion_socio:{
+            required: "Ingrese una profesión."
+         }
     },
     errorElement: 'small',
     errorPlacement: function(error, element) {
