@@ -15,12 +15,21 @@ if ($tipo_evaluacion==3) {
         $porcentaje = $_POST['puntaje' . $i];
         registrar_escala_conceptual($tipo_evaluacion, $proyecto, $u, $a, $nombre_criterio, $concepto, $porcentaje);
     }
-    header("Location: ../Vista/iuRegistroEvaluacion.php?a=$a&u=$u&p=$porcen_rest&proyecto=$proyecto");
+    if($porcen_rest>0){
+        header("Location: ../Vista/iuRegistroEvaluacion.php?a=$a&u=$u&p=$porcen_rest&proyecto=$proyecto");
+    }else{
+        header("Location: ../Vista/iuTablaRegistroEvaluacion.php?a=$a&u=$u&proyecto=$proyecto&e=1");
+    }
+    //header("Location: ../Vista/iuRegistroEvaluacion.php?a=$a&u=$u&p=$porcen_rest&proyecto=$proyecto");
 }else {
     for ($i = 1; $i <= $num_campos; $i++) {
         $concepto = $_POST['concepto' . $i];
         $porcentaje = $_POST['puntaje' . $i];
-        registrar_escala_numeral($tipo_evaluacion, $proyecto, $u, $a, $nombre_criterio, $concepto, $porcentaje);
-    }    
-    header("Location: ../Vista/iuRegistroEvaluacion.php?a=$a&u=$u&p=$porcen_rest&proyecto=$proyecto");
+        registrar_escala_numeral($tipo_evaluacion, $proyecto, $u, $a, $nombre_criterio, $concepto." - ".$porcentaje, $porcentaje);
+    }
+    if($porcen_rest>0){
+        header("Location: ../Vista/iuRegistroEvaluacion.php?a=$a&u=$u&p=$porcen_rest&proyecto=$proyecto");
+    }else{
+        header("Location: ../Vista/iuTablaRegistroEvaluacion.php?a=$a&u=$u&proyecto=$proyecto&e=1");
+    }
 }

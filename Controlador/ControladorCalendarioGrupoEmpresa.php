@@ -2,7 +2,7 @@
 
 require_once '../Modelo/ModeloCalendarioGrupoEmpresa.php';
 $codigo_ge = $_GET['a'];
-
+$u =$_GET['u'];//$u -> codigo usuario grupo empresa
 function mostrar_reuniones() {
     global $codigo_ge;
     $arreglo_fechas_semanales = recuperar_fechas_reunionsemanal($codigo_ge);
@@ -43,20 +43,6 @@ function mostrar_hitos() {
                <div data-role="event" data-codigo = "'.$cod_hito.'" data-name="'.$nom_hito.'" data-start="" data-end="" data-location="' . $codigo_ge . '"></div>
                </div>';
     }
-}
-
-function registrarOtros() {
-    echo '<div data-role="day" data-day="2014112">
-    <div data-role="event" data-name="This is an event" data-start="" data-end="" data-location=""></div>
-    </div>';
-
-    echo '<div data-role="day" data-day="2014521">
-    <div data-role="event" data-name="This is an event 2" data-start="" data-end="" data-location=""></div>
-    </div>';
-
-    echo '<div data-role="day" data-day="2014521">
-    <div data-role="event" data-name="Reunion semanal de seguimiento" data-start="" data-end="" data-location=""></div>
-</div>';
 }
 
 function dia_fijado() {

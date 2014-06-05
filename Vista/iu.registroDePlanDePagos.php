@@ -48,15 +48,15 @@
                         <table width="400" border="2">
                             <tr>
                                 <td align="right"><Strong>Hito o Evento :</strong></td>
-                                <td width="130"><input type="text" name="hito_evento" id="hito_evento" required/></td>
+                                <td width="130"><input type="text" name="hito_evento" id="hito_evento"  required/></td>
                             </tr>
                             <tr>
                                 <td align="right"><Strong>Porcentaje de Pago :</strong></td>
-                                <td width="130"><input type="text" name="porcentaje_pago" id="porcentaje_pago" required pattern="[0-9.]+"/><strong> (%)</strong></td>
+                                <td width="130"><input type="text" name="porcentaje_pago" id="porcentaje_pago" required title="{10, 25.5, 100,}" pattern="[0-9.]+"/><strong> (%)</strong></td>
                             </tr>
                             <tr>
                                 <td align="right"><strong>Fecha de Pago :</strong></td>
-                                <td width="130"><input type="text" name="fecha_pago" id="fecha_pago" placeholder="Seleccione una fecha" required/></td>
+                                <td width="130"><input type="text" name="fecha_pago" id="fecha_pago" placeholder="Seleccione una fecha" required /></td>
                             </tr>
                             <tr>
                                 <td width="130"><input name="codPlan_pago" value="<?=$_GET['c_p'];?>" type="hidden"></td>
@@ -64,7 +64,7 @@
                         </table>
                     </td>
                     <td>    
-                        <table width="300" border="2">
+                        <table width="270" border="2">
                             <tr>
                                 <td align="center"><strong>Monto Restante :</strong></td>         
                             </tr>
@@ -149,7 +149,7 @@
             echo "<table width='100%' border='2' cellspacing='2' cellpadding='2'>"   
                         ."<tr>"
                             ."<td width='30%' align='right'><strong>Entregable :</strong></td>"
-                            ."<td><textarea name='entregable' cols='70%' rows='1%' required></textarea></td>"
+                            ."<td><textarea name='entregable' cols='64%' rows='1%' required></textarea></td>"
                         ."</tr>"
                         ."<tr>"
                             ."<td width='20'>"

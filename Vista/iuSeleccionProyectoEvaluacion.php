@@ -28,7 +28,7 @@
                     ?>
                 </nav>
                 <div id="noticias_seguimiento">
-                    <h2> REGISTRO DE EVALUACION </h2>
+                    <h2> REGISTRO DE EVALUACION FINAL </h2>
                     <lbl>Seleccione un proyecto para registrar su evaluación: </lbl>
                     <br />
                     <br />

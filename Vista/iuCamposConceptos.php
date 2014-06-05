@@ -27,7 +27,7 @@
                 ?>       
                 </nav>
                 <div id="noticias_seguimiento">
-                    <h2> REGISTRO DE EVALUACION </h2>
+                    <h2> REGISTRO DE EVALUACION FINAL</h2>
                     <?php
                     $tipo_evaluacion = $_GET['te'];
                     $num_campos = $_POST['cant_conceptos'];
@@ -38,13 +38,20 @@
                     echo "<form name='formulario' method='POST' action='../Controlador/ControladorCamposConceptos.php?a=$a&u=$u&te=$tipo_evaluacion&nc=$num_campos&ncr=$nombre_criterio&cp=$proyecto&pcent=$porcen_calif&pcr=$porcen_rest'>";
 
                     for ($i = 1; $i <= $num_campos; $i++) {
-                        echo 'Concepto:          ';
-                        echo 'Puntaje del concepto:<br />';
-                        echo '<input type=text name=concepto'.$i.'>';
-                        echo '<input type=text name=puntaje'.$i.'><br>';
+                        if($tipo_evaluacion==3){
+                        echo '<lbl>Concepto: </lbl>';
+                        echo '<lbl>Puntaje del concepto:</lbl><br />';
+                        echo '<input id="txtCodigo" type=text name=concepto'.$i.'>';
+                        echo '<input id="txtPequenio" type=text name=puntaje'.$i.'><br>';
+                        }else{
+                            echo '<lbl>De: </lbl>';
+                        echo '<lbl> A: </lbl><br />';
+                        echo '<input id="txtPequenio" type=text name=concepto'.$i.'>';
+                        echo '<input id="txtPequenio" type=text name=puntaje'.$i.'><br />';
+                        }
                     }
 
-                    echo '<input type="submit" name="btn_regAvance" value="Registrar"> </form>';
+                    echo '<br /><input type="submit" id="btn_regAvance" name="btn_regAvance" value="Registrar"> </form>';
                     ?>
                     <br />
                     </form>

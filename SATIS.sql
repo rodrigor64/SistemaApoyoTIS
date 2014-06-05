@@ -46,6 +46,15 @@ CREATE TABLE App (
   PRIMARY KEY(codApp)
 );
 
+CREATE TABLE Proyecto (
+  codProyecto VARCHAR(25) NOT NULL,
+  nombreProyecto VARCHAR(60) NULL,
+  fechaFinProyecto DATE NULL,
+  vigente BOOL NULL,
+  PRIMARY KEY(codProyecto)
+);
+
+
 CREATE TABLE Grupo_Empresa (
   CodGrupo_Empresa SERIAL NOT NULL,
   Usuario_idUsuario INTEGER NOT NULL,
@@ -172,61 +181,83 @@ CREATE TABLE evaluacion_semanal
 
 CREATE TABLE Tipo_Criterio (
   id_tipo serial NOT NULL,
-  tipo VARCHAR(15) NULL,
+  tipo VARCHAR(17) NULL,
   PRIMARY KEY(id_tipo)
 );
 
-
-
 CREATE TABLE Registro_Evaluacion_Final (
-  idRegistro_Evaluacion_Final serial NOT NULL,
+  idRegistro_Evaluacion_Final SERIAL NOT NULL,
   Consultor_Usuario_idUsuario INTEGER NOT NULL,
   Consultor_idConsultor INTEGER NOT NULL,
-  PRIMARY KEY(idRegistro_Evaluacion_Final, Consultor_Usuario_idUsuario, Consultor_idConsultor),
+  Proyecto_codProyecto VARCHAR(10) NOT NULL,
+  PRIMARY KEY(idRegistro_Evaluacion_Final, Consultor_Usuario_idUsuario, Consultor_idConsultor, Proyecto_codProyecto),
   FOREIGN KEY(Consultor_idConsultor, Consultor_Usuario_idUsuario)
     REFERENCES Consultor(idConsultor, Usuario_idUsuario)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(Proyecto_codProyecto)
+    REFERENCES Proyecto(codProyecto)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION
 );
 
-
 CREATE TABLE Criterio (
-  id_criterio serial NOT NULL,
+  id_criterio SERIAL NOT NULL,
   Tipo_Criterio_id_tipo INTEGER NOT NULL,
-  Registro_Evaluacion_Final_idRegistro_Evaluacion_Final INTEGER NOT NULL,
+  Registro_Evaluacion_Final_Proyecto_codProyecto VARCHAR(10) NOT NULL,
   Registro_Evaluacion_Final_Consultor_idConsultor INTEGER NOT NULL,
   Registro_Evaluacion_Final_Consultor_Usuario_idUsuario INTEGER NOT NULL,
-  porcentaje INTEGER NULL,
-  PRIMARY KEY(id_criterio, Tipo_Criterio_id_tipo, Registro_Evaluacion_Final_idRegistro_Evaluacion_Final, Registro_Evaluacion_Final_Consultor_idConsultor, Registro_Evaluacion_Final_Consultor_Usuario_idUsuario),
+  Registro_Evaluacion_Final_idRegistro_Evaluacion_Final INTEGER NOT NULL,
+  nombre VARCHAR(100) NULL,
+  PRIMARY KEY(id_criterio, Tipo_Criterio_id_tipo, Registro_Evaluacion_Final_Proyecto_codProyecto, Registro_Evaluacion_Final_Consultor_idConsultor, Registro_Evaluacion_Final_Consultor_Usuario_idUsuario, Registro_Evaluacion_Final_idRegistro_Evaluacion_Final),
   FOREIGN KEY(Tipo_Criterio_id_tipo)
     REFERENCES Tipo_Criterio(id_tipo)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION,
-  FOREIGN KEY(Registro_Evaluacion_Final_idRegistro_Evaluacion_Final, Registro_Evaluacion_Final_Consultor_Usuario_idUsuario, Registro_Evaluacion_Final_Consultor_idConsultor)
-    REFERENCES Registro_Evaluacion_Final(idRegistro_Evaluacion_Final, Consultor_Usuario_idUsuario, Consultor_idConsultor)
+  FOREIGN KEY(Registro_Evaluacion_Final_idRegistro_Evaluacion_Final, Registro_Evaluacion_Final_Consultor_Usuario_idUsuario, Registro_Evaluacion_Final_Consultor_idConsultor, Registro_Evaluacion_Final_Proyecto_codProyecto)
+    REFERENCES Registro_Evaluacion_Final(idRegistro_Evaluacion_Final, Consultor_Usuario_idUsuario, Consultor_idConsultor, Proyecto_codProyecto)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION
 );
 
 
-CREATE TABLE Evaluacion_final (
-  codEvaluacion_final INTEGER NOT NULL,
+CREATE TABLE Detalle_Criterio (
+  idDetalle_Criterio SERIAL NOT NULL,
   Criterio_Registro_Evaluacion_Final_idRegistro_Evaluacion_Final INTEGER NOT NULL,
-  Criterio_Tipo_Criterio_id_tipo INTEGER NOT NULL,
-  Criterio_id_criterio INTEGER NOT NULL,
   Criterio_Registro_Evaluacion_Final_Consultor_Usuario_idUsuario INTEGER NOT NULL,
   Criterio_Registro_Evaluacion_Final_Consultor_idConsultor INTEGER NOT NULL,
+  Criterio_Registro_Evaluacion_Final_Proyecto_codProyecto VARCHAR(10) NOT NULL,
+  Criterio_Tipo_Criterio_id_tipo INTEGER NOT NULL,
+  Criterio_id_criterio INTEGER NOT NULL,
+  porcentaje INTEGER NULL,
+  PRIMARY KEY(idDetalle_Criterio, Criterio_Registro_Evaluacion_Final_idRegistro_Evaluacion_Final, Criterio_Registro_Evaluacion_Final_Consultor_Usuario_idUsuario, Criterio_Registro_Evaluacion_Final_Consultor_idConsultor, Criterio_Registro_Evaluacion_Final_Proyecto_codProyecto, Criterio_Tipo_Criterio_id_tipo, Criterio_id_criterio),
+  FOREIGN KEY(Criterio_id_criterio, Criterio_Tipo_Criterio_id_tipo, Criterio_Registro_Evaluacion_Final_Proyecto_codProyecto, Criterio_Registro_Evaluacion_Final_Consultor_idConsultor, Criterio_Registro_Evaluacion_Final_Consultor_Usuario_idUsuario, Criterio_Registro_Evaluacion_Final_idRegistro_Evaluacion_Final)
+    REFERENCES Criterio(id_criterio, Tipo_Criterio_id_tipo, Registro_Evaluacion_Final_Proyecto_codProyecto, Registro_Evaluacion_Final_Consultor_idConsultor, Registro_Evaluacion_Final_Consultor_Usuario_idUsuario, Registro_Evaluacion_Final_idRegistro_Evaluacion_Final)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+);
+
+CREATE TABLE Evaluacion_final (
+  codEvaluacion_final SERIAL NOT NULL,
   Grupo_Empresa_Usuario_idUsuario INTEGER NOT NULL,
   Grupo_Empresa_CodGrupo_Empresa INTEGER NOT NULL,
-  fecha DATE NOT NULL,
-  nota INTEGER NOT NULL,
-  PRIMARY KEY(codEvaluacion_final, Criterio_Registro_Evaluacion_Final_idRegistro_Evaluacion_Final, Criterio_Tipo_Criterio_id_tipo, Criterio_id_criterio, Criterio_Registro_Evaluacion_Final_Consultor_Usuario_idUsuario, Criterio_Registro_Evaluacion_Final_Consultor_idConsultor, Grupo_Empresa_Usuario_idUsuario, Grupo_Empresa_CodGrupo_Empresa),
-  FOREIGN KEY(Criterio_id_criterio, Criterio_Tipo_Criterio_id_tipo, Criterio_Registro_Evaluacion_Final_idRegistro_Evaluacion_Final, Criterio_Registro_Evaluacion_Final_Consultor_idConsultor, Criterio_Registro_Evaluacion_Final_Consultor_Usuario_idUsuario)
-    REFERENCES Criterio(id_criterio, Tipo_Criterio_id_tipo, Registro_Evaluacion_Final_idRegistro_Evaluacion_Final, Registro_Evaluacion_Final_Consultor_idConsultor, Registro_Evaluacion_Final_Consultor_Usuario_idUsuario)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION,
+  Detalle_Criterio_Criterio_id_criterio INTEGER NOT NULL,
+  Detalle_Criterio_Criterio_Tipo_Criterio_id_tipo INTEGER NOT NULL,
+  Detalle_Criterio_Criterio_Registro_Evaluacion_Final_Proyecto_codProyecto VARCHAR(10) NOT NULL,
+  Detalle_Criterio_Criterio_Registro_Evaluacion_Final_Consultor_idConsultor INTEGER NOT NULL,
+  Detalle_Criterio_Criterio_Registro_Evaluacion_Final_Consultor_Usuario_idUsuario INTEGER NOT NULL,
+  Detalle_Criterio_Criterio_Registro_Evaluacion_Final_idRegistro_Evaluacion_Final INTEGER NOT NULL,
+  Detalle_Criterio_idDetalle_Criterio INTEGER NOT NULL,
+  fecha DATE NULL,
+  nota INTEGER NULL,
+  observaciones TEXT NULL,
+  PRIMARY KEY(codEvaluacion_final, Grupo_Empresa_Usuario_idUsuario, Grupo_Empresa_CodGrupo_Empresa, Detalle_Criterio_Criterio_id_criterio, Detalle_Criterio_Criterio_Tipo_Criterio_id_tipo, Detalle_Criterio_Criterio_Registro_Evaluacion_Final_Proyecto_codProyecto, Detalle_Criterio_Criterio_Registro_Evaluacion_Final_Consultor_idConsultor, Detalle_Criterio_Criterio_Registro_Evaluacion_Final_Consultor_Usuario_idUsuario, Detalle_Criterio_Criterio_Registro_Evaluacion_Final_idRegistro_Evaluacion_Final, Detalle_Criterio_idDetalle_Criterio),
   FOREIGN KEY(Grupo_Empresa_CodGrupo_Empresa, Grupo_Empresa_Usuario_idUsuario)
     REFERENCES Grupo_Empresa(CodGrupo_Empresa, Usuario_idUsuario)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(Detalle_Criterio_idDetalle_Criterio, Detalle_Criterio_Criterio_Registro_Evaluacion_Final_idRegistro_Evaluacion_Final, Detalle_Criterio_Criterio_Registro_Evaluacion_Final_Consultor_Usuario_idUsuario, Detalle_Criterio_Criterio_Registro_Evaluacion_Final_Consultor_idConsultor, Detalle_Criterio_Criterio_Registro_Evaluacion_Final_Proyecto_codProyecto, Detalle_Criterio_Criterio_Tipo_Criterio_id_tipo, Detalle_Criterio_Criterio_id_criterio)
+    REFERENCES Detalle_Criterio(idDetalle_Criterio, Criterio_Registro_Evaluacion_Final_idRegistro_Evaluacion_Final, Criterio_Registro_Evaluacion_Final_Consultor_Usuario_idUsuario, Criterio_Registro_Evaluacion_Final_Consultor_idConsultor, Criterio_Registro_Evaluacion_Final_Proyecto_codProyecto, Criterio_Tipo_Criterio_id_tipo, Criterio_id_criterio)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION
 );
@@ -261,26 +292,26 @@ CREATE TABLE Rol_Funcion (
       ON UPDATE NO ACTION
 );
 
-CREATE TABLE Cons_Actividad (
-  codCons_Actividad SERIAL NOT NULL,
-  Consultor_Usuario_idUsuario INTEGER NOT NULL,
-  Consultor_idConsultor INTEGER NOT NULL,
-  visiblePara VARCHAR(30) NULL,
-  requiereRespuesta VARCHAR(15) NULL,
-  fechaInicio TIMESTAMP NULL,
-  fechaFin TIMESTAMP NULL,
-  horaInicio TIME NULL,
-  horaFin TIME NULL,
-  titulo VARCHAR(30) NULL,
-  descripcion TEXT NULL,
-  activo BOOL NULL,
-  contestada BOOL NULL,
-  PRIMARY KEY(codCons_Actividad, Consultor_Usuario_idUsuario, Consultor_idConsultor),
-  FOREIGN KEY(Consultor_idConsultor, Consultor_Usuario_idUsuario)
-    REFERENCES Consultor(idConsultor, Usuario_idUsuario)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION
+CREATE TABLE cons_actividad
+(
+  codcons_actividad serial NOT NULL,
+  consultor_usuario_idusuario integer NOT NULL,
+  consultor_idconsultor integer NOT NULL,
+  visiblepara character varying(30),
+  requiererespuesta character varying(15),
+  fechainicio date,
+  fechafin date,
+  horainicio time without time zone,
+  horafin time without time zone,
+  titulo character varying(30),
+  descripcion text,
+  contestada boolean,
+  CONSTRAINT cons_actividad_pkey PRIMARY KEY (codcons_actividad, consultor_usuario_idusuario, consultor_idconsultor),
+  CONSTRAINT cons_actividad_consultor_idconsultor_fkey FOREIGN KEY (consultor_idconsultor, consultor_usuario_idusuario)
+      REFERENCES consultor (idconsultor, usuario_idusuario) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 );
+
 CREATE TABLE GE_Documento (
   idGE_Documento SERIAL NOT NULL,
   Grupo_Empresa_CodGrupo_Empresa INTEGER NOT NULL,
@@ -307,13 +338,6 @@ CREATE TABLE Cons_Documento (
       ON UPDATE NO ACTION
 );
 
-CREATE TABLE Proyecto (
-  codProyecto VARCHAR(25) NOT NULL,
-  nombreProyecto VARCHAR(60) NULL,
-  fechaFinProyecto DATE NULL,
-  vigente BOOL NULL,
-  PRIMARY KEY(codProyecto)
-);
 
 CREATE TABLE detalle_ge
 (
@@ -449,3 +473,15 @@ INSERT INTO tipo_socio(nombretipo)
 INSERT INTO tipo_socio(codtipo_socio, nombretipo)
                VALUES ('socio regular');
 
+INSERT INTO tipo_criterio(
+            tipo)
+    VALUES ('verdadero/falso');
+INSERT INTO tipo_criterio(
+            tipo)
+    VALUES ('numerico');
+INSERT INTO tipo_criterio(
+            tipo)
+    VALUES ('escala conceptual');
+INSERT INTO tipo_criterio(
+            tipo)
+    VALUES ('escala numeral');

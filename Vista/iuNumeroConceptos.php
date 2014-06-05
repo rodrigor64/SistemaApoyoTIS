@@ -34,13 +34,13 @@
                             $porcen_calif = $_GET['pcent'];
                             $porcen_rest = $_GET['pcr'];
                         ?>
-                    <h2> REGISTRO DE EVALUACION </h2>
+                    <h2> REGISTRO DE EVALUACION FINAL</h2>
                    <?php echo "<form name='formulario' method='POST' action='../Vista/iuCamposConceptos.php?a=$a&u=$u&te=$tipo_evaluacion&ncr=$nombre_criterio&cp=$proyecto&pcent=$porcen_calif&pcr=$porcen_rest'>" ?>
                         <lbl>Cantidad de conceptos:</lbl>
                         <br />
-                        <textarea id="txtCodigo" name="cant_conceptos"></textarea>
+                        <textarea id="txtPorcentaje" name="cant_conceptos"></textarea>
                         <br />
-                        <input type="submit" name="btn_regAvance" id="btn_regAvance" value="OK">
+                        <input type="submit" id="btn_regAvance" name="btn_regAvance" id="btn_regAvance" value="OK">
 
                     </form>
                 </div>

@@ -26,17 +26,19 @@ $(document).ready(function(){
     <article id="contenido_consultor">
     <nav id="menu_consultor" >
     <?php
-    $a=$_GET['a'];// $a -> codigo del consultor
-    $u=$_GET['u'];// $u -> codigo de usuario del consultor
-   echo"<a href='iu.registroProyecto.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_registrarProyecto.jpg'/></a>    
-        <a href='iuListaEmpresas.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_listaEmpresas.jpg'/></a>
-        <a href='iuAddActividad.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_añadirActividad.jpg'/></a>
-        <a href='iu.foroConsultor.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_foro.jpg'/></a>
-        <a href='iu.subidaArchivo.html?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_subirArchivo.jpg'/></a>
-        <a href='iuSeleccionProyectoEvaluacion.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_registroEvaluacion.jpg'/></a>
-        <a href='../Controlador/ControladorBackup.php'><img width='100%' height='48' src='imagenes/btn_backup.jpg'/></a>
-        <a href='../Controlador/ControladorFinalizarSesion.php'><img src='imagenes/btn_cerrarSesion.png' width='100%' height='46' /></a>";
-    ?>
+                    $a = $_GET['a']; // $a -> codigo del consultor
+                    $u = $_GET['u']; // $u -> codigo de usuario del consultor
+                    echo"<a href='iu.registroProyecto.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_registrarProyecto.jpg'/></a>    
+                    <a href='iuListaEmpresas.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_listaEmpresas.jpg'/></a>
+                    <a href='iuAddActividad.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_añadirActividad.jpg'/></a>
+                    <a href='iu.foroConsultor.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_foro.jpg'/></a>
+                    <a href='iusubirArchivoConsultor.php?a=$a&u=$u&m=0'><img width='100%' height='48' src='imagenes/btn_subirArchivo.jpg'/></a>
+                    <a href='iuSeleccionProyectoEvaluacion.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_registroEvaluacion.jpg'/></a>
+                    <a href='iuRecursos.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_recusos.jpg'/></a>
+                    <a href='../Controlador/ControladorBackup.php'><img width='100%' height='48' src='imagenes/btn_backup.jpg'/></a>
+                    <a href='../Vista/iu.consultor.php?a=$a&u=$u'><img src='imagenes/btn_volverMiPagina.jpg' width='100%' height='46' alt='btn_1' /></a>
+                    <a href='../Controlador/ControladorFinalizarSesion.php'><img src='imagenes/btn_cerrarSesion.png' width='100%' height='46' /></a>";
+                    ?>
     </nav>
     <div id="noticias_consultor">
         <fieldset id="fieldsetForo"> 
@@ -80,7 +82,7 @@ $(document).ready(function(){
                     </tr>
                     <tr>
                         <td align="right">Codigo del Proyecto:</td>
-                        <td width="10$"><input type="text" name="codigo_proyecto" id="codigo_proyecto" required <?php if(isset($_REQUEST['mensaje2'])){$cp=$_GET['cp']; echo"value='$cp'"; }?> /></td>
+                        <td width="10$"><input type="text" name="codigo_proyecto" id="codigo_proyecto" title="CPTIS-1402-2014 (NOMBRE-NUMERO-AÑO)" pattern="[A-Z0-9-]+" required <?php if(isset($_REQUEST['mensaje2'])){$cp=$_GET['cp']; echo"value='$cp'"; }?> /></td>
                         <td align="rigth" width="50%"><?php if(isset($_REQUEST['mensaje2'])){
                             $mensaje=$_GET['cp']; 
                             echo" EL CODIGO <strong>".$mensaje."</strong> YA EXISTE";}?>

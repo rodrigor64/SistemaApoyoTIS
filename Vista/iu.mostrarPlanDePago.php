@@ -14,15 +14,17 @@
     <?php 
     $a = $_GET['a'];// $a -> codigo grupo empresa
     $u =$_GET['u'];//$u -> codigo usuario grupo empresa
-    echo"<nav id='menu_grupoEmpresa' >
-            <a href='iu.propuestaDePago.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_planDePagos.jpg'/></a>
-            <a href='iu.mostrarPlanDePago.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_verPlanDePagos.jpg'/></a>    
-            <a href='iu.foroGrupoEmpresa.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_foro.jpg'/></a>
-            <a href='../Vista/iuDiaReunionGE.php?a=$a&u=$u'><img src='imagenes/btn_diaDeReunion.jpg' width='100%' height='46' alt='btn_1' /></a>
-            <a href='../Vista/iuCalendarioGrupoEmpresa.php?a=$a&u=$u'><img src='imagenes/btn_calendario.jpg' width='100%' height='46' alt='btn_1' /></a>
-            <a href='../Vista/iuGrupoEmpresa.php?a=$a&u=$u'><img src='imagenes/btn_volverMiPagina.jpg' width='100%' height='46' alt='btn_1' /></a>
-            <a href='../Controlador/ControladorFinalizarSesion.php'><img src='imagenes/btn_cerrarSesion.png' width='100%' height='46' alt='btn_1' /></a>
-         </nav>";
+    echo "<nav id='menu_grupoEmpresa'>
+                        <a href='iu.propuestaDePago.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_planDePagos.jpg'/></a>
+                            <a href='iu.mostrarPlanDePago.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_verPlanDePagos.jpg'/></a>    
+                            <a href='iu.foroGrupoEmpresa.php?a=$a&u=$u'><img width='100%' height='48' src='imagenes/btn_foro.jpg'/></a>
+                            <a href='../Vista/iuDiaReunionGE.php?a=$a&u=$u'><img src='imagenes/btn_diaDeReunion.jpg' width='100%' height='46' alt='btn_1' /></a>
+                            <a href='../Vista/iuCalendarioGrupoEmpresa.php?a=$a&u=$u'><img src='imagenes/btn_calendario.jpg' width='100%' height='46' alt='btn_1' /></a>
+                            <a href='../Vista/iuGrupoEmpresa.php?a=$a&u=$u'><img src='imagenes/btn_volverMiPagina.jpg' width='100%' height='46' alt='btn_1' /></a>
+                            <a href='../Vista/iuRegistroSocio.php?a=$a&u=$u'><img src='imagenes/btn_registrarSocio.jpg' width='100%' height='46' alt='btn_1' /></a>
+                            <a href='../Controlador/ControladorFinalizarSesion.php'><img src='imagenes/btn_cerrarSesion.png' width='100%' height='46' alt='btn_1' /></a>
+                
+                </nav>";
     ?>
     <div id="noticias_grupoEmpresa" >
         <fieldset id="fieldsetForo" width="670"> 
@@ -36,6 +38,7 @@
                             <td>Porcentaje</td>
                             <td>Monto</td>
                             <td>Fecha De Pago</td>
+                           <!-- <td>Entregables</td> -->
                         </tr>
                          <?php
                          require '../Controlador/ControladorMostrarPlanDePagos.php';
@@ -43,15 +46,18 @@
                          if($estado=="basio"){
                             echo ' "NO EXISTE UN REGISTRO RECIENTE" ';
                          }else if($estado=="lleno"){
-                            $lista = mostrarPlan($a,$u);
-                            foreach($lista as $post):?>
-                        <tr>
-                            <td><?php echo $post['hitoevento']?></td>
-                            <td><?php echo $post['porcentajepago']?></td>
-                            <td><?php echo $post['monto']?></td>
-                            <td><?php echo $post['fechapago']?></td>    
-                        </tr>
-                            <?php endforeach;
+                            $array_planDePagos = mostrarPlan($a,$u);
+                            $contador = 0;
+                                while ($contador <= sizeof($array_planDePagos)-1){?>
+                                        <tr>
+                                            <td><?php echo $array_planDePagos[$contador]?></td>
+                                            <td><?php echo $array_planDePagos[$contador+1]?></td>
+                                            <td><?php echo $array_planDePagos[$contador+2]?></td>
+                                            <td><?php echo $array_planDePagos[$contador+3]?></td>
+                                        </tr>        
+                                <?php  
+                                $contador=$contador+4;
+                                }
                          }?>
                     </thead>
                 </table>
