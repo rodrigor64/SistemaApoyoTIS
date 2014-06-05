@@ -35,21 +35,48 @@
                 <br>
                    <thead>
                        <tbody align="center" style="font:  1.1em/1.1em 'FB Armada' arial">
-                       <tr><th>Criterio</th><th>Tipo</th><th>Porcentaje</th></tr>
+                       <tr><th>Criterio</th><th>Tipo</th><th>Porcentaje</th><th>Nota</th></tr>
                        
                         <?php 
                         include '../Controlador/controladorTablaEvaluacion.php'; 
                         
-                        $fila= mostrarTabla($a, $u, $codGE, $codUGE);
-                        foreach ($fila as $elemento){ ?>
-                        <tr>
-                            <td><?php echo $elemento['criterio'] ?></td>
-                            </tr>
-                        <?php } ?>
-                        
+                        $lista= mostrarTabla($a, $u, $codGE, $codUGE);
+                        $lista_e=  mostrar_tabla_evaluados($a, $u, $codGE, $codUGE);
+                        $contador = 0;
+                        $contador_e = 0;
+                                while ($contador <= sizeof($lista)-1){?>
+                                        <tr>
+                                            <td><?php echo $lista[$contador]?></td>
+                                            <td><?php echo $lista[$contador+1]?></td>
+                                            <td><?php echo $lista[$contador+2]?></td>
+                                            <td><?php echo $lista[$contador+3]?></td>
+                                        </tr>
+                                        
+                                <?php  
+                                $contador=$contador+4;
+                                } 
+                                while ($contador_e <= sizeof($lista_e)-1){?>
+                                        <tr>
+                                            <td><?php echo $lista_e[$contador_e]?></td>
+                                            <td><?php echo $lista_e[$contador_e+1]?></td>
+                                            <td><?php echo $lista_e[$contador_e+2]?></td>
+                                            <td><?php echo $lista_e[$contador_e+3]?></td>
+                                        </tr>
+                                        
+                                <?php  
+                                $contador_e=$contador_e+4;
+                                }
+                                ?>
+
                        <tbody>
                         </thead>
                 </table> 
+                        <br />
+                        
+                        <lbl style='margin-left: 30em'>TOTAL:</lbl>
+                        <lbl3><?php echo mostrar_nota($codGE);?></lbl3>
+                        <br />
+                        
           </form> 
                 </div>   
             </article>

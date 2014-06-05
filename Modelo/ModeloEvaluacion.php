@@ -14,7 +14,7 @@ function conseguir_proyectos() {
     pg_close($c);
 }
 
-function insertar_registro_evaluacion($cod_proyecto,$id_cons, $usr_cons) {
+function insertar_registro_evaluacion($cod_proyecto, $id_cons, $usr_cons) {
     $con = new Conexion();
     $c = $con->getConection();
     //cambiar los valores de usuario y codigo de docente
@@ -146,7 +146,7 @@ function registrar_escala_numeral($tipo_crit, $cod_proy, $usr_cons, $id_cons, $n
     pg_close($c);
 }
 
-function mostrar_lista_criterios($cod_consultor,$usr_consultor, $cod_ge, $usr_ge) {
+function mostrar_lista_criterios($cod_consultor, $usr_consultor, $cod_ge, $usr_ge) {
     $con = new Conexion();
     $c = $con->getConection();
 
@@ -155,18 +155,90 @@ function mostrar_lista_criterios($cod_consultor,$usr_consultor, $cod_ge, $usr_ge
     $cod_proyecto_GE = $cod_proy_conseguido->proyecto_codproyecto;
 
     $consulta = pg_query($c, "select id_criterio, nombre, tipo, id_tipo, porcentaje_calificacion from criterio c, tipo_criterio tc where c.tipo_criterio_id_tipo = tc.id_tipo and registro_evaluacion_final_consultor_idconsultor=" . $cod_consultor . "and c.registro_evaluacion_final_proyecto_codproyecto= '" . $cod_proyecto_GE . "';");
+    $array_criterios = array();
     while ($f = pg_fetch_object($consulta)) {
         $id_crit = $f->id_criterio;
         $nombre = $f->nombre;
         $tipo = $f->tipo;
         $id_tipo = $f->id_tipo;
         $porcen_calif = $f->porcentaje_calificacion;
-        echo "<tr>"
-        . "<td><a href='../Vista/iuEvaluacionFinalDocenteGE.php?a=$cod_consultor&u=$usr_consultor&c_a=$cod_ge&i_u=$usr_ge&cc=$id_crit&nc=$nombre&pc=$porcen_calif&tc=$tipo&it=$id_tipo'>$nombre</td><td>$tipo</td><td>$porcen_calif</td>"
-        . "</tr>";
-    }
-    exit();
+        if (!criterio_evaluado($id_crit)) {
+            
+            $array_criterios[] = "<a href='../Vista/iuEvaluacionFinalDocenteGE.php?a=$cod_consultor&u=$usr_consultor&c_a=$cod_ge&i_u=$usr_ge&cc=$id_crit&nc=$nombre&pc=$porcen_calif&tc=$tipo&it=$id_tipo'>".$nombre;
+                $array_criterios[] = $tipo;
+                $array_criterios[] = $porcen_calif;
+                $array_criterios[] = 0;
+            }
+        }
+        return $array_criterios;
+       // exit();
     pg_close($c);
+}
+
+
+function mostrar_lista_criterios_evaluados($cod_consultor, $usr_consultor, $cod_ge, $usr_ge) {
+$con = new Conexion();
+    $c = $con->getConection();
+
+    $cons_cod_proyecto = pg_query($c, "select proyecto_codproyecto from consultor_proyecto_grupo_empresa where grupo_empresa_codgrupo_empresa = $cod_ge;");
+    $cod_proy_conseguido = pg_fetch_object($cons_cod_proyecto);
+    $cod_proyecto_GE = $cod_proy_conseguido->proyecto_codproyecto;
+
+    $consulta = pg_query($c, "select id_criterio, nombre, tipo, id_tipo, porcentaje_calificacion from criterio c, tipo_criterio tc where c.tipo_criterio_id_tipo = tc.id_tipo and registro_evaluacion_final_consultor_idconsultor=" . $cod_consultor . "and c.registro_evaluacion_final_proyecto_codproyecto= '" . $cod_proyecto_GE . "';");
+    $array_criterios_e = array();
+    
+    while ($f = pg_fetch_object($consulta)) {
+        $id_crit = $f->id_criterio;
+        if (criterio_evaluado($id_crit)) {
+            $consulta_evaluado = pg_query($c, "select ef.detalle_criterio_criterio_id_criterio, c.nombre, t.tipo, t.id_tipo, c.porcentaje_calificacion, ef.nota from evaluacion_final ef, criterio c, tipo_criterio t where detalle_criterio_criterio_id_criterio=id_criterio and ef.detalle_criterio_criterio_tipo_criterio_id_tipo = t.id_tipo and detalle_criterio_criterio_id_criterio = $id_crit;");
+            
+            while ($f_e = pg_fetch_object($consulta_evaluado)) {
+                $nombre_e = $f_e->nombre;
+                $tipo_e = $f_e->tipo;
+                $id_tipo_e = $f_e->id_tipo;
+                $porcen_calif_e = $f_e->porcentaje_calificacion;
+                $nota_e = $f_e->nota;
+                
+                $array_criterios_e[] = "<a href='../Vista/iuEvaluacionFinalDocenteGE.php?a=$cod_consultor&u=$usr_consultor&c_a=$cod_ge&i_u=$usr_ge&cc=$id_crit&nc=$nombre_e&pc=$porcen_calif_e&tc=$tipo_e&it=$id_tipo_e'>".$nombre_e;
+                $array_criterios_e[] = $tipo_e;
+                $array_criterios_e[] = $porcen_calif_e;
+                $array_criterios_e[] = $nota_e;
+
+            }
+    }}
+        return $array_criterios_e;
+       // exit();
+    pg_close($c);
+}
+
+
+
+function suma_nota($cod_grupo_empresa) {
+    $con = new Conexion();
+    $c = $con->getConection();
+
+    $consulta_suma = pg_query($c, "select sum(nota) from evaluacion_final where grupo_empresa_codgrupo_empresa = $cod_grupo_empresa;");
+    $f = pg_fetch_object($consulta_suma);
+    $suma = $f->sum;
+    return $suma;
+        pg_close($c);
+}
+//select sum(nota) from evaluacion_final where grupo_empresa_codgrupo_empresa = 1;
+
+
+function criterio_evaluado($id_criterio) {
+    $con = new Conexion();
+    $c = $con->getConection();
+
+    $consulta_cantidad_conseguida = pg_query($c, "select count(*) from evaluacion_final where detalle_criterio_criterio_id_criterio = $id_criterio;");
+    $f = pg_fetch_object($consulta_cantidad_conseguida);
+    $cant = $f->count;
+    if ($cant > 0) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+    //select count(*) from evaluacion_final where detalle_criterio_criterio_id_criterio = 1
 }
 
 function mostrar_detalle_criterio($cod_criterio) {
@@ -201,7 +273,7 @@ function mostrar_lista_registro_criterios($cod_cons, $cod_proyecto) {
     pg_close($c);
 }
 
-function registrar_evaluacion_final($cod_ge,$usr_ge,$id_cons,$usr_cons, $id_criterio, $id_tipo_criterio, $nombre_concepto, $observaciones) {
+function registrar_evaluacion_final($cod_ge, $usr_ge, $id_cons, $usr_cons, $id_criterio, $id_tipo_criterio, $nombre_concepto, $observaciones) {
     $con = new Conexion();
     $c = $con->getConection();
 
@@ -227,7 +299,7 @@ function registrar_evaluacion_final($cod_ge,$usr_ge,$id_cons,$usr_cons, $id_crit
             detalle_criterio_criterio_registro_evaluacion_final_consultor_i, 
             detalle_criterio_criterio_registro_evaluacion_final_consultor_u, 
             detalle_criterio_criterio_registro_evaluacion_final_idregistro_, 
-            detalle_criterio_iddetalle_criterio, nota, observaciones)
+            detalle_criterio_iddetalle_criterio, nota, observaciones)           
     VALUES ($usr_ge, $cod_ge, 
             $id_criterio, $id_tipo_criterio, 
             '$cod_proyec', 
@@ -249,10 +321,11 @@ function no_existe_registro_EF($cod_ge, $id_criterio) {
     $consulta_cantidad_conseguida = pg_query($c, "select count(*) from evaluacion_final where grupo_empresa_codgrupo_empresa = $cod_ge and detalle_criterio_criterio_id_criterio = $id_criterio;");
     $f = pg_fetch_object($consulta_cantidad_conseguida);
     $cant = $f->count;
-    if($cant > 0){
+    if ($cant > 0) {
         return FALSE;
+    } else {
+        return TRUE;
     }
-    else{ return TRUE;}
 }
 
 function no_existe_registro($cod_proyecto, $cod_consultor) {
@@ -261,13 +334,14 @@ function no_existe_registro($cod_proyecto, $cod_consultor) {
     $consulta_cantidad_conseguida = pg_query($c, "select count(*) from registro_evaluacion_final where proyecto_codproyecto ='$cod_proyecto' and consultor_idconsultor = $cod_consultor;");
     $f = pg_fetch_object($consulta_cantidad_conseguida);
     $cant = $f->count;
-    if($cant > 0){
+    if ($cant > 0) {
         return FALSE;
+    } else {
+        return TRUE;
     }
-    else{ return TRUE;}
 }
 
-function registrar_evaluacion_final_numerico($cod_ge,$usr_ge,$id_cons,$usr_cons, $id_criterio, $id_tipo_criterio, $observaciones, $nota) {
+function registrar_evaluacion_final_numerico($cod_ge, $usr_ge, $id_cons, $usr_cons, $id_criterio, $id_tipo_criterio, $observaciones, $nota) {
     $con = new Conexion();
     $c = $con->getConection();
 
@@ -284,8 +358,8 @@ function registrar_evaluacion_final_numerico($cod_ge,$usr_ge,$id_cons,$usr_cons,
 
     $nota_alcanzada = $nota * ($porcentaje_criterio / 100);
 
-    
-    
+
+
     if (no_existe_registro_EF($cod_ge, $id_criterio)) {
         pg_query($c, "INSERT INTO evaluacion_final(
             grupo_empresa_usuario_idusuario, grupo_empresa_codgrupo_empresa, 

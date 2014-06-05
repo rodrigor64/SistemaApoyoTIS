@@ -68,6 +68,21 @@ h2 {
     width: 340px;
     height: 50px;
 }
+
+#txtPequenio{
+    font-family: Corbel;
+    font-size: 16;
+    padding-top: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    background-color: whitesmoke;
+    margin-left: 70px;
+    margin-top: 7px;
+    width: 100px;
+    height: 50px;
+}
+
 #btn_regAvance {
     float: left;
     font-weight: bold;
