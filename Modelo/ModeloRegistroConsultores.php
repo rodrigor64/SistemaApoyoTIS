@@ -37,11 +37,6 @@ function RegistrarConsultor($usuario, $nombre_consul,$correo_consul,$telefono_co
     $sql.= "VALUES ($idusuario,'$nombre_consultor','$correo_consultor','$telefono_consultor')";
     pg_query($con, $sql) or die("ERROR :( " . pg_last_error());
     
-    $cadena = "<h2>Sin Actividades</h2>";
-    $mis_actividades = fopen("../Vista/Otros/Actividades/Consultores/$idusuario.data", "w");
-    fwrite($mis_actividades, $cadena);
-    fclose($mis_actividades);
-    
     header("Location: ../Vista/iuRegistroConsultor.php");
 }
 

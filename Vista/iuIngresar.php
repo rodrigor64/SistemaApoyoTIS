@@ -1,9 +1,7 @@
 <?php
-session_start();
-if ($_SESSION['id_usuario']) {
-    session_destroy();
-    header("Location: ../Vista/iuIngresar.php");
-}
+session_start(); 
+session_unset(); 
+session_destroy();
 ?>
 <!DOCTYPE html >
 <html>

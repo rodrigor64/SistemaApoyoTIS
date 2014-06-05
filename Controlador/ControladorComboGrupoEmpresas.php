@@ -6,7 +6,7 @@ obtenerGrupoEmpresas();
 function obtenerGrupoEmpresas() {
     $conexion = new Conexion();
     $conexion->getConection();
-    $sql = " SELECT * from grupo_empresa" ;
+    $sql = " select usuario_idusuario,nombrelargoge from usuario as u , grupo_empresa as ge where u.idusuario = ge.usuario_idusuario and habilitada = 't'" ;
     $rows = $conexion->ejecutarSql($sql);
     $caden="";
         $miarchivo=fopen('../Vista/Otros/grupos.data','w');

@@ -5,7 +5,6 @@ function obtenerActividades() {
     $conexion = new Conexion();
     $conexion->getConection();
     $sql = "select codcons_actividad, visiblepara,requiererespuesta,fechainicio,fechafin,horainicio,horafin,titulo,descripcion from cons_actividad where visiblepara='publica' and now()<=fechafin and now()>=fechainicio ORDER BY fechainicio desc";
-    //select visiblepara,requiererespuesta,fechainicio,fechafin,horainicio,horafin,titulo,descripcion from cons_actividad where visiblepara='publica' and now()<=fechafin and now()>=fechainicio ORDER BY fechainicio desc;
     $rows = $conexion->ejecutarSql($sql);
     for ($i = 0; $i < count($rows); $i++) {
         $row = $rows[$i];
@@ -19,18 +18,18 @@ function obtenerActividades() {
         $titulo = $row['titulo'];
         $descripcion = $row['descripcion'];
         
-        
-        echo "<lbl3>$titulo</lbl3><br />";
-        echo "<lbl2>Fecha de inicio: $fechaini</lbl2><br />";
-        echo "<lbl2>Fecha de fin: $fechafin</lbl2><br />";
+   
+        echo "<lbl3><strong>$titulo</strong></lbl3><br/>";
+        echo "&nbsp;<lbl2><strong>Fecha de inicio:</strong> $fechaini</lbl2><br />";
+        echo "&nbsp;<lbl2><strong>Fecha de fin:</strong> $fechafin</lbl2><br />";
         if ($requiere == "si_requiere") {
             
-        echo "<a href '' onclick='openWin($codigo_actividad);'>Ver Mas |</a><a href=''> Responder</a><br />";
+        echo "&nbsp;&nbsp;&nbsp;<a href '' onclick='openWin($codigo_actividad);'>Ver Mas</a>  &nbsp; <a href=''> Responder</a><br />";
         }  else {
             
-        echo "<a href='' onclick='openWin($codigo_actividad);'>Ver Mas </a><br />";
+        echo "&nbsp;&nbsp;&nbsp;<a href='' onclick='openWin($codigo_actividad);'>Ver Mas </a><br />";
         }
-        echo "<lbl2>________________________________________________________________________________________________________________</lbl2><br />";
+        echo "<lbl2>______________________________________________________________________________________________</lbl2><br />";
     }
     
 }
